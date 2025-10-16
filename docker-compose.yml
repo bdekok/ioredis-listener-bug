@@ -1,0 +1,28 @@
+services:
+  nextjs:
+    container_name: nextjs
+    image: nextjs
+    build:
+      context: .
+      dockerfile: docker/nextjs/Dockerfile
+      target: dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ~/.npmrc:/root/.npmrc
+      - .:/app
+    ports:
+      - '3000:3000'
+    networks: [application]
+
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis:7.0
+    ports:
+      - '6379:6379'
+    networks: [application]
+
+
+networks:
+  application:
